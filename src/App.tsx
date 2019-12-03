@@ -11,6 +11,7 @@ const App = () => {
     const [ tracks, setTracks ] = useState<Track[]>([]);
     const [ isPlaying, setIsPlaying ] = useState(false);
     const [ currentBeat, setCurrentBeat ] = useState(0);
+    const [ bpm, setBpm ] = useState(128);
 
     const addTrack = useCallback((track) => {
         setTracks(newTracks => newTracks.concat(track));
@@ -31,7 +32,7 @@ const App = () => {
         } else {
             setCurrentBeat(currentBeat + 1);
         }
-    }, 60000 / (128 * 4));
+    }, (isPlaying ? 60000 / (bpm * 4) : null));
 
     return (
         <div className="app">
@@ -50,6 +51,11 @@ const App = () => {
                 <button onClick={() => setIsPlaying(false)}>
                     <MdPause />
                 </button>
+                <label>
+                    BPM:
+                    <input type="number" min="90" max="300" value={bpm}
+                    onChange={(event) => setBpm(+event.target.value)} />
+                </label>
             </div>
 
             <Tracks
