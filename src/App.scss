@@ -49,3 +49,17 @@ html {
   padding: 15px;
   margin-top: 15px;
 }
+
+button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #eee;
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  font-size: 24px;
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}

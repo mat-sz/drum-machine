@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { MdPlayArrow, MdPause, MdStop } from 'react-icons/md';
 import useInterval from '@use-it/interval';
 
 import './App.scss';
@@ -34,16 +35,23 @@ const App = () => {
 
     return (
         <div className="app">
+            <div className="controls">
             { !isPlaying ? 
-                <button onClick={() => {
-                    setCurrentBeat(0);
-                    setIsPlaying(true);
-                }}>Play</button>
+                <button onClick={() => setIsPlaying(true)}>
+                    <MdPlayArrow />
+                </button>
                 : <button onClick={() => {
                     setIsPlaying(false);
                     setCurrentBeat(0);
-                }}>Stop</button>
+                }}>
+                    <MdStop />
+                </button>
             }
+                <button onClick={() => setIsPlaying(false)}>
+                    <MdPause />
+                </button>
+            </div>
+
             <Tracks
                 tracks={tracks}
                 currentBeat={currentBeat}
