@@ -34,42 +34,56 @@ const App = () => {
         }
     }, (isPlaying ? 60000 / (bpm * 4) : null));
 
+    const play = () => {
+        setIsPlaying(true);
+    };
+
+    const pause = () => {
+        setIsPlaying(false);
+    };
+
+    const stop = () => {
+        setIsPlaying(false);
+        setCurrentBeat(0);
+    };
+
+    const updateTrack = (updatedTrack: Track) => {
+        setTracks(tracks.map((track) => {
+            if (track.id === updatedTrack.id) {
+                return updatedTrack;
+            } else {
+                return track;
+            }
+        }))
+    }
+
+    const onChangeBPM = (e: React.ChangeEvent<HTMLInputElement>) => setBpm(+e.target.value);
+
     return (
         <div className="app">
             <div className="controls">
             { !isPlaying ? 
-                <button onClick={() => setIsPlaying(true)}>
+                <button onClick={play}>
                     <MdPlayArrow />
                 </button>
-                : <button onClick={() => {
-                    setIsPlaying(false);
-                    setCurrentBeat(0);
-                }}>
+                : <button onClick={stop}>
                     <MdStop />
                 </button>
             }
-                <button onClick={() => setIsPlaying(false)}>
+                <button onClick={pause}>
                     <MdPause />
                 </button>
                 <label>
                     BPM:
                     <input type="number" min="90" max="300" value={bpm}
-                    onChange={(event) => setBpm(+event.target.value)} />
+                    onChange={onChangeBPM} />
                 </label>
             </div>
 
             <Tracks
                 tracks={tracks}
                 currentBeat={currentBeat}
-                updateTrack={(updatedTrack) => {
-                    setTracks(tracks.map((track) => {
-                        if (track.id === updatedTrack.id) {
-                            return updatedTrack;
-                        } else {
-                            return track;
-                        }
-                    }))
-                }}
+                updateTrack={updateTrack}
             />
             <Upload addTrack={addTrack} />
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import classNames from 'classnames';
 
 import { Track as TrackType } from '../Types';
+import TrackBeat from './TrackBeat';
 
 const Track = ({ track, updateTrack, currentBeat } : { track: TrackType, updateTrack: (track: TrackType) => void, currentBeat: number }) => {
     return (
@@ -11,16 +11,13 @@ const Track = ({ track, updateTrack, currentBeat } : { track: TrackType, updateT
             </div>
             <div className="track__track">
                 { track.beats.map((velocity, i) => 
-                    <div
-                        className={classNames('track__beat', {
-                            'track__beat--selected': velocity > 0,
-                            'track__beat--active': currentBeat === i,
-                        })}
-                        onClick={() => {
-                            track.beats[i] = (velocity > 0) ? 0 : 1;
-                            updateTrack(track);
-                        }} >
-                    </div>
+                    <TrackBeat
+                        key={i}
+                        index={i}
+                        track={track}
+                        updateTrack={updateTrack}
+                        currentBeat={currentBeat}
+                    />
                 ) }
             </div>
         </div>
